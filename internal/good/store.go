@@ -135,17 +135,17 @@ func (s PgStore) CreateGood(ctx context.Context, good Good) (Good, error) {
 	row := tx.QueryRow(
 		ctx,
 		`INSERT INTO goods (
-        id,
-		project_id,
-    	name,
-        description,
-    	priority,
-        removed,
-    	created_at
-	)
-	VALUES
-		($1, $2, $3, $4, $5, $6, $7)
-	RETURNING id, project_id, name, description, priority, removed, created_at`,
+        	id,
+			project_id,
+    		name,
+        	description,
+    		priority,
+        	removed,
+    		created_at
+		)
+		VALUES
+			($1, $2, $3, $4, $5, $6, $7)
+		RETURNING id, project_id, name, description, priority, removed, created_at`,
 		good.Id,
 		good.ProjectId,
 		good.Name,
@@ -192,17 +192,17 @@ func (s PgStore) DeleteGood(ctx context.Context, id, projectId int64) (Good, err
 	row := tx.QueryRow(
 		ctx,
 		`SELECT 
-		id,
-		project_id,
-		name,
-		description,
-		priority,
-		removed,
-		created_at
-	FROM
-		goods
-	WHERE id = $1 AND project_id = $2
-	FOR UPDATE`,
+			id,
+			project_id,
+			name,
+			description,
+			priority,
+			removed,
+			created_at
+		FROM
+			goods
+		WHERE id = $1 AND project_id = $2
+		FOR UPDATE`,
 		id,
 		projectId,
 	)
@@ -224,9 +224,9 @@ func (s PgStore) DeleteGood(ctx context.Context, id, projectId int64) (Good, err
 	row = tx.QueryRow(
 		ctx,
 		`UPDATE goods 
-	SET removed = true 
-	WHERE id = $1 AND project_id = $2
-	RETURNING id, project_id, name, description, priority, removed, created_at`,
+		SET removed = true 
+		WHERE id = $1 AND project_id = $2
+		RETURNING id, project_id, name, description, priority, removed, created_at`,
 		id,
 		projectId,
 	)
@@ -268,17 +268,17 @@ func (s PgStore) UpdateGood(ctx context.Context, id, projectId int64, params Upd
 	row := tx.QueryRow(
 		ctx,
 		`SELECT 
-		id,
-		project_id,
-		name,
-		description,
-		priority,
-		removed,
-		created_at
-	FROM
-		goods
-	WHERE id = $1 AND project_id = $2
-	FOR UPDATE`,
+			id,
+			project_id,
+			name,
+			description,
+			priority,
+			removed,
+			created_at
+		FROM
+			goods
+		WHERE id = $1 AND project_id = $2
+		FOR UPDATE`,
 		id,
 		projectId,
 	)
@@ -305,14 +305,14 @@ func (s PgStore) UpdateGood(ctx context.Context, id, projectId int64, params Upd
 	row = tx.QueryRow(
 		ctx,
 		`UPDATE goods 
-	SET 
-	    project_id = $1,
-	    name = $2,
-		description = $3,
-	    priority = $4,
-	    removed = $5
-	WHERE id = $6 and project_id = $7
-	RETURNING id, project_id, name, description, priority, removed, created_at`,
+		SET 
+	    	project_id = $1,
+	    	name = $2,
+			description = $3,
+	    	priority = $4,
+	    	removed = $5
+		WHERE id = $6 and project_id = $7
+		RETURNING id, project_id, name, description, priority, removed, created_at`,
 		params.ProjectId,
 		params.Name,
 		description,
@@ -426,8 +426,8 @@ func (s PgStore) GetReprioritizedGoods(ctx context.Context, id int64) ([]Reprior
 	rows, err := s.Pool.Query(
 		ctx,
 		`SELECT 
-		id,
-		priority
+			id,
+			priority
 		FROM
 			goods
 		WHERE id >= $1
