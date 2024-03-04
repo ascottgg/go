@@ -76,17 +76,17 @@ func (s PgStore) ListGoods(ctx context.Context, params ListGoodsParams) ([]Good,
 	rows, err := s.Pool.Query(
 		ctx,
 		`SELECT 
-		id,
-		project_id,
-		name,
-		description,
-		priority,
-		removed,
-		created_at
-	FROM
-		goods
-	ORDER BY id
-	LIMIT $1 OFFSET $2`,
+			id,
+			project_id,
+			name,
+			description,
+			priority,
+			removed,
+			created_at
+		FROM
+			goods
+		ORDER BY id
+		LIMIT $1 OFFSET $2`,
 		params.Limit,
 		params.Offset,
 	)
